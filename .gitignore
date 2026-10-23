@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.env
+
+# Virtual environments
+venv/
+.venv/
+.vercel/
+*.log
+.env/
+.envs/
+
+# Data and models (OPTIONAL: if repo size becomes big)
+backend/data/*
+backend/models/*
+
+# VS Code
+.vscode/
+
+# Misc
+.DS_Store
+Thumbs.db
