@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>VisionForge — Image Learning Lab</title>
+    <meta name="description" content="Train and compare Logistic Regression, Random Forest and a CNN on your own image classes. A temporary, session-isolated learning demo." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Chart.js for training graphs -->
+    <script src="assets/chart.umd.js"></script>
+  </head>
+  <body>
+    <div class="app-root">
+      <!-- HEADER -->
+      <header class="app-header">
+        <div class="header-left">
+          <img src="assets/logo1.png" alt="Logo" class="app-logo" />
+          <div class="header-title">
+            <h1>VisionForge</h1>
+            <p>Multi-model Image Classifier · FastAPI + ML</p>
+          </div>
+        </div>
+        <div class="header-right">
+          <button id="onnx-export-btn" class="btn secondary">
+            Export classical ONNX
+          </button>
+
+          <div class="theme-toggle">
+            <span class="theme-label">Light</span>
+            <label class="switch">
+              <input type="checkbox" id="theme-toggle-input" />
+              <span class="slider"></span>
+            </label>
+            <span class="theme-label">Dark</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- MAIN LAYOUT -->
+      <main class="app-main">
+        <!-- LEFT: Dataset / Upload -->
+        <section class="card" id="dataset-card">
+          <h2>1. Dataset & Classes</h2>
+          <p class="card-subtitle">
+            Add at least two classes with 3 images each (10+ recommended). Images are sent to this site's server only when you click Upload, and kept in temporary memory. Do not upload private or sensitive images.
+          </p>
+
+          <div class="field-group">
+            <label for="class-name-input">Class name</label>
+            <input
+              type="text"
+              id="class-name-input"
+              placeholder="e.g. cat, dog, bottle"
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="upload-input">Select images</label>
+            <input
+              type="file"
+              id="upload-input"
+              accept="image/*"
+              multiple
+            />
+          </div>
+
+          <button id="upload-btn" class="btn primary full-width">
+            Upload Images to Class
+          </button>
+
+          <div id="upload-status" class="status-text"></div>
+          <button id="reset-session-btn" class="btn secondary full-width">Clear temporary dataset & models</button>
+          <p class="hint small">Six classes / 120 images maximum; each image under 512 KB. Refresh starts a new session. Previous memory expires after 20 minutes of inactivity or a server restart. Cloud scaling may reset a session; if data disappears, re-upload. CNN runs four epochs on CPU. Export includes Logistic Regression and Random Forest only.</p>
+
+          <div class="hint small">
+            Tip: create at least 2 classes with 10+ images each for better results.
+          </div>
+        </section>
+
+        <!-- MIDDLE: Training -->
+        <section class="card" id="training-card">
+          <h2>2. Train Models</h2>
+          <p class="card-subtitle">
+            Trains Logistic Regression, Random Forest & CNN together.
+          </p>
+
+          <button id="train-btn" class="btn accent full-width">
+            Start Training
+          </button>
+
+          <div id="training-status" class="status-block"></div>
+
+          <div class="progress-container">
+            <div class="progress-label">
+              <span>Training progress</span>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div id="progress-bar-fill"></div>
+            </div>
+          </div>
+
+          <div class="device-info" id="device-info"></div>
+
+          <div class="charts-grid">
+            <div>
+              <h3>Accuracy</h3>
+              <canvas id="accuracyChart"></canvas>
+            </div>
+            <div>
+              <h3>Loss</h3>
+              <canvas id="lossChart"></canvas>
+            </div>
+          </div>
+
+          <div class="metrics-section">
+            <h3>Model Accuracy Summary</h3>
+            <table class="metrics-table" id="metrics-table">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Accuracy</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- RIGHT: Prediction -->
+        <section class="card" id="prediction-card">
+          <h2>3. Predict</h2>
+          <p class="card-subtitle">
+            Test your trained models with uploads or webcam snapshots.
+          </p>
+
+          <!-- Upload prediction -->
+          <div class="predict-block">
+            <h3>From Image Upload</h3>
+            <input type="file" id="predict-upload-input" accept="image/*" />
+            <button id="predict-upload-btn" class="btn primary full-width">
+              Predict from Image
+            </button>
+          </div>
+
+          <hr class="divider" />
+
+          <!-- Webcam prediction -->
+          <div class="predict-block">
+            <h3>From Webcam</h3>
+            <p class="hint small">Camera stays off until enabled. Only Capture & Predict sends a snapshot to this server.</p>
+            <button id="webcam-start-btn" class="btn secondary">Enable camera</button>
+            <button id="webcam-stop-btn" class="btn secondary">Stop camera</button>
+            <video
+              id="webcam-video"
+              autoplay
+              playsinline
+              class="webcam-box"
+            ></video>
+            <button id="webcam-capture-btn" class="btn primary full-width">
+              Capture & Predict
+            </button>
+            <canvas id="webcam-canvas" class="hidden"></canvas>
+          </div>
+
+          <div class="predictions-section">
+            <h3>Model Predictions</h3>
+            <div id="predictions-container" class="predictions-grid">
+              <!-- Filled by script.js -->
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <span>VisionForge · FastAPI + scikit-learn + TensorFlow · Educational demo, not a production recognition system. Validation accuracy depends on your images; confidence is not certainty.</span>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
