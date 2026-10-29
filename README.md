@@ -12,6 +12,10 @@ Train and compare three real image classifiers from labeled examples: Logistic R
 - Download Logistic Regression and Random Forest as ONNX, with labels and preprocessing instructions. CNN export is not supported.
 - Switch light/dark appearance for the current page and clear the temporary dataset and models.
 
+## Verified live workflow
+
+The production API was checked with eight synthetic red/blue images: both classes uploaded, all three classifiers completed training, all three returned predictions, and clearing the session returned an empty dataset. The health endpoint and both bundled assets returned HTTP 200. These tiny synthetic checks validate the workflow, not real-world model quality. Local regression execution is pending dependency installation.
+
 ## Privacy
 
 No signup, analytics, external chart CDN, database, cookies, browser storage, or persistent image/model files. Images are transmitted to this site's own server only when Upload or Capture & Predict is clicked; they are decoded into in-memory arrays. Only use non-sensitive images. Camera access is opt-in and can be stopped. Each page has a separate random identifier in memory; no login or account exists.
@@ -51,4 +55,5 @@ Images become 64×64 RGB float32 arrays in [0,1]. A deterministic per-class 80/2
 Validation accuracy from a tiny user-selected dataset is unreliable and can be inflated by similar examples. Confidence scores are not calibrated certainty. This is not a medical, identity, security or production recognition tool. CPU training and cold starts can take time. No GPU is promised. Uploads invalidate existing models, so retraining uses the current dataset.
 
 The original Teachable-Machine-style hackathon interface is preserved with targeted privacy and deployment fixes. Chart.js 4.5.1 is bundled locally under its MIT license.
+
 
