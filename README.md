@@ -2,6 +2,8 @@
 
 Train and compare three real image classifiers from labeled examples: Logistic Regression, Random Forest, and a small TensorFlow CNN. A student-friendly FastAPI application with a responsive HTML/CSS/JavaScript interface.
 
+[Open the live VisionForge lab](https://visionforge-image-lab.vercel.app/)
+
 ## What it can do
 
 - Upload examples into 2–6 named classes, with at least 3 images each (10+ recommended).
@@ -49,3 +51,4 @@ Images become 64×64 RGB float32 arrays in [0,1]. A deterministic per-class 80/2
 Validation accuracy from a tiny user-selected dataset is unreliable and can be inflated by similar examples. Confidence scores are not calibrated certainty. This is not a medical, identity, security or production recognition tool. CPU training and cold starts can take time. No GPU is promised. Uploads invalidate existing models, so retraining uses the current dataset.
 
 The original Teachable-Machine-style hackathon interface is preserved with targeted privacy and deployment fixes. Chart.js 4.5.1 is bundled locally under its MIT license.
+
